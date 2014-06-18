@@ -92,6 +92,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap\ico\apple-touch-icon-114-precomposed.png" />
     <Content Include="Content\bootstrap\ico\apple-touch-icon-144-precomposed.png" />
     <Content Include="Content\bootstrap\ico\apple-touch-icon-57-precomposed.png" />
