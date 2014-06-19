@@ -28,6 +28,7 @@ pkg/
 obj/
 bin/
 build/
+packages*/
 
 _ReSharper
 *.csproj.user
