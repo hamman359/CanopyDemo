@@ -1,46 +1,69 @@
-﻿//#r "canopy.dll"
-
+﻿open System
+open OpenQA.Selenium
 open canopy
 open runner
-open System
 
 open configuration
 open reporters
 
-reporter <- new LiveHtmlReporter() :> IReporter
+open types
+
+//let liveHtmlReporter = new LiveHtmlReporter(Firefox)
+//liveHtmlReporter.reportTemplateUrl <- System.Environment.CurrentDirectory + "..\\..\\..\\reports\\report_template\\canopy_test_results.htm"
+//liveHtmlReporter.saveReportHtml(System.Environment.CurrentDirectory)("Report.html")
+reporter <- new LiveHtmlReporter(Firefox) :> IReporter
+//reporter <- liveHtmlReporter
 
 start firefox
 let mainBrowser = browser
-start chrome
-let secondBrowser = browser
+//start chrome
+//let secondBrowser = browser
 //start ie
 
-tile browsers
+//tile browsers
 
-switchTo mainBrowser
+//switchTo mainBrowser
 
 "Demo Test" &&& fun _ ->
 
-    url "http://localhost:54008/home/demo"
+    url "http://localhost:56295"
 
-    "#firstName" << "John"
-    "#lastName" << "Doe"
+    // Fill out and submit form
+    "#FirstName" << "John"
+    "#LastName" << "Doe"
+    "#Address" << "123 Anywhere Dr."
+    "#City" << "Nowhere"
+    "#State" << "Ohio" // DDL
+    "#Zip" << "12345"
+    "#Email" << "John.Doe@Email.com"
+    "#Confirm" << "John.Doe@Email.com"
+    check "#SignUp[value='true']" //Radio
+    click "#Submit"
 
-    "#firstName" == "John"
-    "#lastName" == "Smith"
+    // Verify data
+    highlight "#FirstName"
+    "#FirstName" == "John"
+    "#LastName" == "Doe"
+    "#Address" == "123 Anywhere Dr."
+    "#City" == "Nowhere"
+    highlight "#State"
+    "#State" == "Ohio"
+    "#Zip" == "12345"
+    "#Email" == "John.Doe@Email.com"
+    highlight "#SignedUp"
+    "#SignedUp" == "True"
 
-    
 // run the tests
 run()
 
-switchTo secondBrowser
-
-run()
+//switchTo secondBrowser
+//
+//run()
 
 quit mainBrowser
-quit secondBrowser
+//quit secondBrowser
 
-printfn "press [enter] to exit"
-System.Console.ReadLine() |> ignore
+//printfn "press [enter] to exit"
+//System.Console.ReadLine() |> ignore
 
 quit()
