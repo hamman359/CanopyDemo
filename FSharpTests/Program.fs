@@ -4,15 +4,17 @@ open canopy
 open runner
 
 open configuration
+open types
 open reporters
 
-open types
-
-//let liveHtmlReporter = new LiveHtmlReporter(Firefox)
-//liveHtmlReporter.reportTemplateUrl <- System.Environment.CurrentDirectory + "..\\..\\..\\reports\\report_template\\canopy_test_results.htm"
-//liveHtmlReporter.saveReportHtml(System.Environment.CurrentDirectory)("Report.html")
 reporter <- new LiveHtmlReporter(Firefox) :> IReporter
-//reporter <- liveHtmlReporter
+
+//liveHtmlReporter.browser
+//let allHtml = liveHtmlReporter.js "return $().html();"
+//let allHtml2 = liveHtmlReporter.reportHtml()
+//liveHtmlReporter.saveReportHtml @"c:\" "report"
+
+
 
 start firefox
 let mainBrowser = browser
@@ -57,13 +59,17 @@ let mainBrowser = browser
 run()
 
 //switchTo secondBrowser
-//
-//run()
+
+let liveHtmlReporter = reporter :?> LiveHtmlReporter
+liveHtmlReporter.reportTemplateUrl <- @"http://localhost:56295/content/reporttemplate.html"
+//liveHtmlReporter.reportHtml()
+liveHtmlReporter.saveReportHtml @"C:\Code\CanopyDemo\" "report"
 
 quit mainBrowser
 //quit secondBrowser
 
 //printfn "press [enter] to exit"
 //System.Console.ReadLine() |> ignore
+
 
 quit()

@@ -112,6 +112,7 @@
     <Content Include="Content\bootstrap\less\tests\navbar-fixed-top.html" />
     <Content Include="Content\bootstrap\less\tests\navbar-static-top.html" />
     <Content Include="Content\bootstrap\less\tests\navbar.html" />
+    <Content Include="Content\reporttemplate.html" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap\js\.jshintrc" />
