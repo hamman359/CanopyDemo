@@ -3,32 +3,30 @@ open OpenQA.Selenium
 open canopy
 open runner
 
-open configuration
 open types
+open configuration
 open reporters
 
 reporter <- new LiveHtmlReporter(Firefox) :> IReporter
 
-//liveHtmlReporter.browser
-//let allHtml = liveHtmlReporter.js "return $().html();"
-//let allHtml2 = liveHtmlReporter.reportHtml()
-//liveHtmlReporter.saveReportHtml @"c:\" "report"
-
-
+let liveHtmlReporter = reporter :?> LiveHtmlReporter
+liveHtmlReporter.reportTemplateUrl <- @"http://CanopyDemo/content/reporttemplate.html"
 
 start firefox
-let mainBrowser = browser
-//start chrome
-//let secondBrowser = browser
+let firefoxBrowser = browser
+start chrome
+let chromeBrowser = browser
+//start phantomJS
+//let phantomJsBrowser = browser
 //start ie
+//let ieBrowser = browser
 
-//tile browsers
+context "Demo Tests"
 
-//switchTo mainBrowser
+let test browser = 
+    switchTo browser
 
-"Demo Test" &&& fun _ ->
-
-    url "http://localhost:56295"
+    url "http://CanopyDemo"
 
     // Fill out and submit form
     "#FirstName" << "John"
@@ -55,21 +53,26 @@ let mainBrowser = browser
     highlight "#SignedUp"
     "#SignedUp" == "True"
 
+
+// () => 
+"Firefox" &&& fun _ ->
+    test firefoxBrowser
+
+"Chrome" &&& fun _ ->
+    test chromeBrowser
+
+"Internet Explorer" &&& todo
+
+"PhantomJs" &&& todo
+
 // run the tests
 run()
 
-//switchTo secondBrowser
+let reportName = String.Format("{0:yyyy-MM-dd_hh-mm-ss}", DateTime.Now) + "_report"
 
-let liveHtmlReporter = reporter :?> LiveHtmlReporter
-liveHtmlReporter.reportTemplateUrl <- @"http://localhost:56295/content/reporttemplate.html"
-//liveHtmlReporter.reportHtml()
-liveHtmlReporter.saveReportHtml @"C:\Code\CanopyDemo\" "report"
+liveHtmlReporter.saveReportHtml @"C:\Code\CanopyDemo\Reports\" reportName
 
-quit mainBrowser
-//quit secondBrowser
-
-//printfn "press [enter] to exit"
-//System.Console.ReadLine() |> ignore
-
+quit firefoxBrowser
+quit chromeBrowser
 
 quit()
